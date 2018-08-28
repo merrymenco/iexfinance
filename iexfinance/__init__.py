@@ -1,5 +1,5 @@
 from .base import _IEXBase
-from .stock import StockReader, HistoricalReader, MoversReader
+from .stock import StockReader, HistoricalReader, MoversReader, ChartHistory
 from .market import TOPS, Last, DEEP, Book
 from .stats import (IntradayReader, RecentReader, RecordsReader,
                     DailySummaryReader, MonthlySummaryReader)
@@ -42,6 +42,11 @@ def Stock(symbols=None, output_format='json', **kwargs):
     else:
         raise ValueError("Please input a symbol or list of symbols")
 
+def get_daily_chart_by_date(symbol, desired_date, **kwargs):
+    """
+    Top-level function for obtaining chart data by minute for a specified date
+    """
+    return ChartHistory(symbol=symbol, desired_date=desired_date, **kwargs).fetch()
 
 def get_historical_data(symbols=None, start=None, end=None,
                         output_format='json', **kwargs):

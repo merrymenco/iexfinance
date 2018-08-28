@@ -791,3 +791,25 @@ class MoversReader(_IEXBase):
     @property
     def url(self):
         return 'stock/market/list/' + self.mover
+
+
+class ChartHistory(_IEXBase):
+    """
+    Base class for retrieving chart data by minute for a specified date, if available.
+    Currently supporting trailing 30 calendar days.
+
+    Parameters
+    ----------
+    symbol: str
+        Desired symbol
+    date: datetime
+        Desired date
+    """
+    def __init__(self, symbol, desired_date, **kwargs):
+        super(ChartHistory, self).__init__(**kwargs)
+        self.symbol = symbol
+        self.date = desired_date.strftime('%Y%m%d')
+
+    @property
+    def url(self):
+        return '/stock/{}/chart/date/{}'.format(self.symbol, self.date)
